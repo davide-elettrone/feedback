@@ -1,38 +1,201 @@
-.App {
+html{
+  /* VARIABILI */
+  --dark-text-color: #002;
+  --avg-text-color: #668;
+  --light-text-color: #def;
+  --main-background: #335;
+  --header-background: #223;
+  --background: #7be;
+  --app-border-radius: 10px;
+  --app-width: min(90%, 1500px);
+
+  /* IMPOSTAZIONI GLOBALI */
+  color: var(--dark-text-color);
+  overflow: hidden;
+}
+
+body{
+  margin: auto;
+  background-color: var(--main-background);
+}
+
+.App :not(.DontExpand){
+  width: 100%;
+}
+
+.App *{
+  animation-duration: 1s;
+  transition: linear 0.1s;
+}
+
+.App{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.App>div>div>div{
+  top: 50%;
+  transform: translateY(-50%);
+  width: var(--app-width) !important;
+  margin-left: calc(50% - var(--app-width) / 2);
+}
+
+.Question>*,.Step>*{
+  margin: 0;
+  padding: 25px;
+}
+.Header{
+  background-color: var(--header-background);
+  border-top-left-radius: var(--app-border-radius);
+  border-top-right-radius: var(--app-border-radius);
+}
+.Header>h1{
+  color: var(--light-text-color);
+}
+.Header>*{
+  margin: 0;
+}
+.Content{
+  background-color: var(--background);
+  border-bottom-left-radius: var(--app-border-radius);
+  border-bottom-right-radius: var(--app-border-radius);
+}
+.Content>*{
+  margin: 10px;
+}
+
+#FeedbackButton{
+  display: flex;
+}
+#FeedbackButton>*{
+  padding: 15px;
+  margin: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: var(--header-background);
+  color: var(--light-text-color);
+  border: var(--avg-text-color) 5px solid;
+  border-radius: var(--app-border-radius);
+  transition: linear 0.1s;
+}
+#FeedbackButton>*:hover{
+  background-color: var(--light-text-color);
+  color: var(--header-background);
+}
+
+.OptionsQuestion>div{
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px;
+}
+.OptionsQuestion>div>input:not([type=text]){
+  display: none;
+}
+.OptionsQuestion>div>input:not([type=text])+*{
+  background-color: #fff2;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+.OptionsQuestion>div>input:not([type=text]):checked+*{
+  background-color: #fff5;
+}
+.OptionsQuestion>div>label{
+  font-weight: normal;
+  margin: 0;
+}
+
+.MultiSelectQuestion>div{
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px;
+}
+.MultiSelectQuestion>div>input:not([type=text]){
+  display: none;
+}
+.MultiSelectQuestion>div>input:not([type=text])+*{
+  background-color: #fff2;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+.MultiSelectQuestion>div>input:not([type=text]):checked+*{
+  background-color: #fff5;
+}
+.MultiSelectQuestion>div>label{
+  font-weight: normal;
+  margin: 0;
+}
+
+.FreeAnswerQuestion>input{
+  padding: 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff5;
+}
+
+.RatingQuestion{
+  display: flex;
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.RatingQuestion>label>input[type=checkbox]{
+  display: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.RatingQuestion>label>input[type=checkbox]+label{
+  height: 25px;
+  background-color: #fff5;
+  margin: auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.RatingQuestion>label:first-child>input[type=checkbox]+label{
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
 }
 
-.App-link {
-  color: #61dafb;
+.RatingQuestion>label:last-child>input[type=checkbox]+label{
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.RatingQuestion>label>input[type=checkbox]:checked+label{
+  background-color: #fffc;
+}
+
+body small{
+  color: var(--avg-text-color);
+}
+
+h1{
+  font-size: 40px;
+}
+
+h1>small{
+  font-size: 20px;
+}
+
+label, input:not([type=text]){
+  cursor: pointer;
+}
+
+div.ThankYouPage{
+  border-radius: var(--app-border-radius);
+  background-color: var(--header-background);
+  width: auto !important;
+  margin: auto;
+  padding: 50px;
+  text-align: center;
+}
+
+.ThankYouPage>h1{
+  color: var(--light-text-color);
 }

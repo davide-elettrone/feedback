@@ -1,0 +1,131 @@
+[
+    {
+        "questionId": 643145,
+        "questionUi": "rpoaèrtqjn",
+        "questionText": "Ti chiediamo di partecipare a questo veloce sondaggio per migliorare l'esperienza dei nostri utenti",
+        "questionInfo": "Per favore rispondi a queste poche veloci domande"
+    },
+    {
+        "questionId": 436432,
+        "questionUi": "sjtiend",
+        "questionText": "La prima sezione riguarda la tua esperienza durante l'installazione"
+    },
+    {
+        "questionId": 4980,
+        "questionUi": "poirjijdcsatrea",
+        "questionText": "Ci sono stati problemi durante l'installazione?",
+        "questionInfo": "Seleziona una risposta",
+        "questionType": "options",
+        "options": [
+            { "optionId": 429, "optionLabel": "Sì" },
+            { "optionId": 905, "optionLabel": "No" }
+        ]
+    },
+    {
+        "questionId": 9822,
+        "questionUi": "poytradlca",
+        "questionText": "Che problemi si sono verificati?",
+        "questionInfo": "Scrivi cos'è successo e se hai qualche suggerimento",
+        "questionType": "free answer",
+        "maxLength": 256,
+        "placeHolder": "Scrivi qui",
+        "condition": {
+            "questionId": 4980,
+            "answer": {
+                "answerId": 429
+            }
+        }
+    },
+    {
+        "questionId": 3849,
+        "questionUi": "trwtvatrt",
+        "questionText": "I prodotti installati presentavano difetti?",
+        "questionInfo": "Seleziona una risposta",
+        "questionType": "options",
+        "options": [
+            { "optionId": 429, "optionLabel": "Sì" },
+            { "optionId": 905, "optionLabel": "No" }
+        ]
+    },
+    {
+        "questionId": 9304,
+        "questionUi": "kopbcvej",
+        "questionText": "Quali prodotti hanno avuto problemi e che problemi erano?",
+        "questionType": "free answer",
+        "maxLength": 256,
+        "placeHolder": "Scrivi qui",
+        "condition": {
+            "questionId": 3849,
+            "answer": {
+                "answerId": 429
+            }
+        }
+    },
+    {
+        "questionId": 8392,
+        "questionUi": "opktracan",
+        "questionText": "Come valuti la tua esperienza con il nostro installatore?",
+        "questionInfo": "Inserisci il tuo livello di gradimento",
+        "questionType": "rating",
+        "options": [
+            {
+                "optionId": 472,
+                "optionLabel": "Molto negativa",
+                "optionWeight": 0
+            },
+            {
+                "optionId": 839,
+                "optionLabel": "Abbastanza negativa",
+                "optionWeight": 1
+            },
+            {
+                "optionId": 542,
+                "optionLabel": "Neutra",
+                "optionWeight": 2
+            },
+            {
+                "optionId": 152,
+                "optionLabel": "Piuttosto positiva",
+                "optionWeight": 3
+            },
+            {
+                "optionId": 234,
+                "optionLabel": "Molto Positiva",
+                "optionWeight": 4
+            }
+        ]
+    },
+    {
+        "questionId": 19348,
+        "questionUi": "ptrancae",
+        "questionText": "La prossima sezione riguarda i tuoi acquisti"
+    },
+    {
+        "questionId": 439782,
+        "questionUi": "opkasdtr",
+        "questionText": "Che prodotti hai comprato?",
+        "questionInfo": "Seleziona una o più risposte",
+        "questionType": "multi select",
+        "options": [
+            { "optionId": 891, "optionLabel": "Ebby ONE" },
+            { "optionId": 431, "optionLabel": "Kit componenti base" },
+            { "optionId": 482, "optionLabel": "Sensore qualità dell'aria" },
+            { "optionId": 690, "optionLabel": "Optimizer" }
+        ],
+        "other": true
+    },
+    {
+        "questionId": 348132,
+        "questionUi": "popaateae",
+        "questionText": "Hai suggerimenti da proporci?",
+        "questionInfo": "Scrivili qui sotto",
+        "questionType": "free answer",
+        "placeHolder": "Scrivi qui"
+    },
+    {
+        "questionId": 231890,
+        "questionUi": "tropjcpad",
+        "questionText": "Il questionario è finito",
+        "questionInfo": "Clicca su \"invia\" per inviarci le tue risposte"
+    }
+]
