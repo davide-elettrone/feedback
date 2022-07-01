@@ -1,66 +1,72 @@
 import React from "react";
 import StepWizard from "react-step-wizard";
-import QuestionDisplay from "../utils/QuestionDisplays";
+import QuestionDisplay, { QuestionType } from "../utils/QuestionDisplays";
+// TODO: ELIMINARE LA SEGUENTE RIGA
 import questionario from '../questionario1.json';
-import { Navigate } from "react-router-dom";
+import { matchPath, Navigate } from "react-router-dom";
 import NavBar from "./NavBar";
+import Request from "../utils/Request";
+
+/**
+ * @typedef {{id: number, optionUi: string, label: string, weight: number}} Option
+ */
+
+/**
+ * @typedef {{id: number, questionUi: string, title: string, subtitle: string, type: QuestionType,
+ * placeHolder: string, maxLengthAnswer: number, condition: string, options: Option[]}} Question
+ */
+
+/**
+ * @typedef {{id: number, feedbackQuestion: Question, answerReference: number, answerText: string}} Answer
+ */
 
 export default class Feedback extends React.Component {
     constructor(props){
         super(props);
 
         /**
-         * @type {{feedback: {questionId: number, answer: Answer}[]}}
+         * @type {{feedbackAnswer: {id: number, feedbackAnswerUi: string,
+         * template: {id: number, feedbackUi: string, name: string, description: string, validFrom: Date, validTo: Date,
+         * questions: Question[]}, timestamp: Date, completed: boolean, answers: Answer[]}, finished: boolean}}
          */
         this.state = {
-            feedback: [],
-            finished: false,
-            user: {
-                name: undefined,
-                surname : undefined
-            }
+            feedbackAnswer: 
+                {
+                    template: {
+                        questions: questionario
+                    },
+                    answers: []
+                }
+            ,
+            finished: false
         };
 
         this.updateFeedback = this.updateFeedback.bind(this);
         this.sendFeedback = this.sendFeedback.bind(this);
     }
 
-    componentDidMount(){
-        this.setState({user: {name: 'Davide', surname: 'Dalla Betta'}})
+    async componentDidMount(){
+        // TODO: decommentare la seguente parte
+        // const { params } = matchPath('/feedbacks/:feedbackUi', window.location.pathname);
+        // const feedbackAnswer = await Request.get('/feedback/' + params.feedbackUi);
+        // this.setState({feedbackAnswer: feedbackAnswer.template});
     }
     
     render(){
         if(this.state.finished) return <Navigate to='/thankyou'/>
 
+        console.log(this.state.feedbackAnswer);
+
         /**
-         * @param {{ questionId: number, answer: Answer }[]} feedback
-         * @param {{ questionId: number, answer: Answer }} condition
+         * @param {Answer[]} feedback
          */
         const checker = function(feedback, condition){
             if(condition === undefined) return true;
-
-            const deepEquality = function(obj1, obj2){
-                const keys = Object.keys(obj1);
-
-                for (let i = 0; i < keys.length; i++) {
-                    const key = keys[i];
-                    if(obj2[key] === undefined){
-                        return false;
-                    }
-                    if(typeof obj1[key] === 'object'){
-                        if(!deepEquality(obj1[key], obj2[key])) return false;
-                    }
-                    else if(obj1[key] !== obj2[key]){
-                        return false;
-                    }
-                }
-
-                return true;
-            }
             
-            const risposta = feedback.find(answer => answer.questionId === condition.questionId);
+            const risposta = feedback.find(answer => answer.feedbackQuestion.id === condition.id);
             if(risposta === undefined) return false;
-            return deepEquality(risposta.answer, condition.answer);
+            return (risposta.answerReference === condition.answerReference &&
+                risposta.answerReference !== -1) || risposta.answerText === condition.answerText;
         }
 
         return <>
@@ -73,15 +79,13 @@ export default class Feedback extends React.Component {
                 intro: 'animate__animated animate__slideInUp'
             }} nav={<NavBar/>}>
                 {
-                    questionario
-                        // controlla ogni condizione
-                        .filter(question => checker(this.state.feedback, question.condition))
+                    this.state.feedbackAnswer.template.questions
+                        .filter(question => checker(this.state.feedbackAnswer.answers, question.condition))
                         .map((question, index) => <QuestionDisplay
                         index={index + 1}
                         onChange={this.updateFeedback}
                         onSend={this.sendFeedback}
                         key={index}
-                        user={this.state.user}
                         question={question}/>)
                 }
             </StepWizard>
@@ -90,19 +94,20 @@ export default class Feedback extends React.Component {
 
     /**
      * Function to update the feedback
-     * @param {number} questionId question id
      * @param {Answer} answer answer
      */
-    updateFeedback(questionId, answer){
-        const feedback = this.state.feedback;
-        const index = feedback.findIndex(val => val.questionId === questionId);
-        if(index === -1) feedback.push({questionId: questionId, answer: answer});
-        else feedback[index].answer = answer;
-        this.setState({feedback: feedback});
+    updateFeedback(answer){
+        const feedbackAnswer = this.state.feedbackAnswer;
+        const index = feedbackAnswer.answers.findIndex(val => val.feedbackQuestion.id === answer.feedbackQuestion.id);
+        if(index === -1) feedbackAnswer.answers.push(answer);
+        else feedbackAnswer.answers[index] = answer;
+        this.setState({feedbackAnswer: feedbackAnswer});
     }
     
-    sendFeedback(){
+    async sendFeedback(){
         console.log(this.state.feedback);
+        // TODO: decommentare le seguenti righe
+        await Request.post('feedbacks/send', this.state.feedbackAnswer)
         this.setState({finished: true});
     }
 }

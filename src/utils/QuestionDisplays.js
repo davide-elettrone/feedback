@@ -2,16 +2,16 @@ import { useState } from "react";
 // eslint-disable-next-line
 import Feedback, { Answer } from "../pages/Feedback";
 // eslint-disable-next-line
-import { Question, FreeAnswerQuestion, OptionsQuestion, RatingQuestion } from "./Questions";
+import { Question, Option } from "../pages/Feedback";
 
 /**
  * @enum {QuestionType} question type
  */
  const QuestionType = {
-    FreeAnswer: 'free answer',
+    FreeAnswer: 'free-answer',
     Options: 'options',
     Rating: 'rating',
-    MultiSelect: 'multi select'
+    MultiSelect: 'multi-select'
 }
 
 /**
@@ -69,13 +69,8 @@ const getButtons = function(step, totalSteps, goToStep, sendFeedback){
 
 /**
  * @callback updateFeedbackCallback
- * @param {number} questionId
  * @param {Answer} answer
  * @return void
- */
-
-/**
- * @typedef {{name: string, surname: string, address: string}} User
  */
 
 /**
@@ -86,10 +81,8 @@ const getButtons = function(step, totalSteps, goToStep, sendFeedback){
  */
 export default function QuestionDisplay(props){
     return <WizardStepObject index={props.index} goToStep={props.goToStep} currentStep={props.currentStep} totalSteps={props.totalSteps}
-        className="Question" id={props.question.questionId} sendFeedback={props.onSend}
-        title={
-            props.question.questionText
-        } subtitle={props.question.questionInfo}>
+        className="Question" id={props.question.id} sendFeedback={props.onSend}
+        title={props.question.title} subtitle={props.question.subtitle}>
         {getQuestion(props.question, props.onChange)}
     </WizardStepObject>
 }
@@ -115,37 +108,37 @@ export default function QuestionDisplay(props){
 
 /**
  * Simple text feedback
- * @param {{question: FreeAnswerQuestion}} props properties
+ * @param {{question: Question}} props properties
  */
 function FreeAnswerQuestionDisplay(props){
     return (<div className="FreeAnswerQuestion">
-        <input type='text' onChange={event => props.onChange(props.question.questionId, event.target.value)}
-        maxLength={props.question.maxLength} id={props.question.questionId} defaultValue={props.question.defaultValue}
+        <input type='text' onChange={event => props.onChange({feedbackQuestion: props.question, answerText: event.target.value})}
+        maxLength={props.question.maxLength} id={props.question.id} defaultValue={props.question.defaultValue}
         placeholder={props.question.placeHolder}/>
     </div>)
 }
 
 /**
  * Simple radio feedback
- * @param {{question: OptionsQuestion}} props properties
+ * @param {{question: Question}} props properties
  */
 function OptionQuestionDisplay(props){
     return (
-        <div className="OptionsQuestion" id={props.question.questionId}>
+        <div className="OptionsQuestion" id={props.question.id}>
             {
                 props.question.options.map((val, index) =>{
                     return <div key={index}>
                         <input
-                        name={props.question.questionId}
-                        defaultChecked={index === props.defaultValue || val.optionLabel === props.defaultValue}
-                        id={props.question.questionId + "/" + val.optionId}
+                        name={props.question.id}
+                        defaultChecked={index === props.defaultValue || val.label === props.defaultValue}
+                        id={props.question.id + "/" + val.id}
                         type="radio"
-                        value={val.optionId}
-                        onChange={() => props.onChange(props.question.questionId, { answerId: val.optionId})}/>
+                        value={val.id}
+                        onChange={() => props.onChange({ feedbackQuestion: props.question, answerReference: val.id})}/>
 
                         <label
-                        htmlFor={props.question.questionId + '/' + val.optionId}>
-                            {val.optionLabel}
+                        htmlFor={props.question.id + '/' + val.id}>
+                            {val.label}
                         </label>
                     </div>
                 })
@@ -154,23 +147,23 @@ function OptionQuestionDisplay(props){
                 props.question.other ?
                 <div>
                     <input
-                    name={props.question.questionId}
+                    name={props.question.id}
                     className="DontExpand"
-                    id={props.question.questionId + "/altro"}
+                    id={props.question.id + "/altro"}
                     type="radio"/>
 
                     <input
                     placeholder='altro'
                     type='text'
                     onChange={event => {
-                        const radio = document.getElementById(props.question.questionId + "/altro");
+                        const radio = document.getElementById(props.question.id + "/altro");
                         radio.value = event.target.value.trim();
-                        props.onChange(props.question.questionId, { answerId: -1, value: radio.value });
+                        props.onChange(props.question.id, { feedbackQuestion: props.question, answerReference: -1, answerText: radio.value });
                     }}
                     onClick={() => {
-                        const radio = document.getElementById(props.question.questionId + "/altro");
+                        const radio = document.getElementById(props.question.id + "/altro");
                         radio.checked = true;
-                        props.onChange(props.question.questionId, { answerId: -1, value: radio.value });
+                        props.onChange(props.question.id, { feedbackQuestion: props.question, answerReference: -1, answerText: radio.value });
                     }}
                     />  
                 </div> : <></>
@@ -181,7 +174,7 @@ function OptionQuestionDisplay(props){
 
 /**
  * Simple radio feedback
- * @param {{question: OptionsQuestion}} props properties
+ * @param {{question: Question}} props properties
  */
 function MultiSelectDisplay(props){
     let answer = [];
@@ -193,23 +186,23 @@ function MultiSelectDisplay(props){
                     return <div key={index}>
                         <input
                         name={props.question.questionId}
-                        defaultChecked={index === props.defaultValue || val.optionLabel === props.defaultValue}
-                        id={props.question.questionId + "/" + val.optionId}
+                        defaultChecked={index === props.defaultValue || val.label === props.defaultValue}
+                        id={props.question.questionId + "/" + val.id}
                         type="checkbox"
-                        value={val.optionId}
+                        value={val.id}
                         onChange={event => {
                             if(event.target.checked){
-                                answer.push({ answerId: val.optionId });
+                                answer.push({ feedbackQuestion: props.question, answerReference: val.id });
                             }
                             else{
-                                answer = answer.filter(selection => selection.answerId !== val.optionId);
+                                answer = answer.filter(selection => selection.feedbackQuestion.id !== val.id);
                             }
-                            props.onChange(props.question.questionId, answer);
+                            props.onChange(props.question.id, answer);
                         }}/>
 
                         <label
-                        htmlFor={props.question.questionId + '/' + val.optionId}>
-                            {val.optionLabel}
+                        htmlFor={props.question.id + '/' + val.id}>
+                            {val.label}
                         </label>
                     </div>
                 })
@@ -218,8 +211,8 @@ function MultiSelectDisplay(props){
                 props.question.other ?
                 <div>
                     <input
-                    name={props.question.questionId}
-                    id={props.question.questionId + "/altro"}
+                    name={props.question.id}
+                    id={props.question.id + "/altro"}
                     type="checkbox"/>
 
                     <input
@@ -238,7 +231,7 @@ function MultiSelectDisplay(props){
                         else{
                             answer = answer.filter(selection => selection.answerId !== -1);
                         }
-                        props.onChange(props.question.questionId, answer);
+                        props.onChange(props.question.id, answer);
                     }}
                     />  
                 </div> : <></>
@@ -249,39 +242,39 @@ function MultiSelectDisplay(props){
 
 /**
  * Simple rating question
- * @param {{question: RatingQuestion}} props properties
+ * @param {{question: Question}} props properties
  */
 function RatingQuestionDisplay(props){
     const getWeight = function(){
-        const answer = props.question.options.find(opt => opt.optionId === Number(value) || opt.optionLabel === value)?.optionWeight;
+        const answer = props.question.options.find(opt => opt.id === Number(value) || opt.label === value)?.weight;
         if(answer === undefined) return -1;
         return answer;
     }
 
-    const [value, setValue] = useState(props.question.defaultValue);
+    const [value, setValue] = useState();
     const weight = getWeight();
 
     return <div className="RatingQuestion">
         {
             props.question.options
-                .sort((first, second) => first.optionWeight - second.optionWeight)
+                .sort((first, second) => first.weight - second.weight)
                 .map((val, index) => {
-                    return <label key={index} htmlFor={props.question.questionId + '/' + val.optionId}>
+                    return <label key={index} htmlFor={props.question.id + '/' + val.id}>
                         <input
-                        name={props.question.questionId}
-                        checked={val.optionWeight <= weight}
+                        name={props.question.id}
+                        checked={val.weight <= weight}
                         className="DontExpand"
-                        id={props.question.questionId + "/" + val.optionId}
+                        id={props.question.id + "/" + val.id}
                         type="checkbox"
-                        value={val.optionId}
+                        value={val.id}
                         onChange={() => {
-                            const newVal = val.optionId;
+                            const newVal = val.id;
                             setValue(newVal);
-                            props.onChange(props.question.questionId, newVal);
+                            props.onChange({ feedbackQuestion: props.question, answerReference: newVal});
                         }}/>
-                        <label htmlFor={props.question.questionId + '/' + val.optionId} className=""/>
-                        <label htmlFor={props.question.questionId + '/' + val.optionId}>
-                            {val.optionLabel}
+                        <label htmlFor={props.question.id + '/' + val.id} className=""/>
+                        <label htmlFor={props.question.id + '/' + val.id}>
+                            {val.label}
                         </label>
                     </label>
                 })

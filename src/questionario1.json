@@ -1,132 +1,132 @@
 [
     {
-        "questionId": 643145,
+        "id": 643145,
         "questionUi": "rpoaèrtqjn",
-        "questionText": "Ciao, ti chiediamo di partecipare a questo veloce sondaggio per migliorare l'esperienza dei nostri utenti",
-        "questionInfo": "Per favore rispondi a queste poche veloci domande"
+        "title": "Ciao, ti chiediamo di partecipare a questo veloce sondaggio per migliorare l'esperienza dei nostri utenti",
+        "subtitle": "Per favore rispondi a queste poche veloci domande"
     },
     {
-        "questionId": 436432,
+        "id": 436432,
         "questionUi": "sjtiend",
-        "questionText": "La prima sezione riguarda la tua esperienza durante l'installazione"
+        "title": "La prima sezione riguarda la tua esperienza durante l'installazione"
     },
     {
-        "questionId": 4980,
+        "id": 4980,
         "questionUi": "poirjijdcsatrea",
-        "questionText": "Ci sono stati problemi durante l'installazione?",
-        "questionInfo": "Seleziona una risposta",
+        "title": "Ci sono stati problemi durante l'installazione?",
+        "subtitle": "Seleziona una risposta",
         "questionType": "options",
         "options": [
-            { "optionId": 429, "optionLabel": "Sì" },
-            { "optionId": 905, "optionLabel": "No" }
+            { "id": 429, "label": "Sì" },
+            { "id": 905, "label": "No" }
         ]
     },
     {
-        "questionId": 9822,
+        "id": 9822,
         "questionUi": "poytradlca",
-        "questionText": "Che problemi si sono verificati?",
-        "questionInfo": "Scrivi cos'è successo e se hai qualche suggerimento",
+        "title": "Che problemi si sono verificati?",
+        "subtitle": "Scrivi cos'è successo e se hai qualche suggerimento",
         "questionType": "free-answer",
         "maxLength": 256,
         "placeHolder": "Scrivi qui",
         "condition": {
-            "questionId": 4980,
+            "id": 4980,
             "answer": {
                 "answerId": 429
             }
         }
     },
     {
-        "questionId": 3849,
+        "id": 3849,
         "questionUi": "trwtvatrt",
-        "questionText": "I prodotti installati presentavano difetti?",
-        "questionInfo": "Seleziona una risposta",
+        "title": "I prodotti installati presentavano difetti?",
+        "subtitle": "Seleziona una risposta",
         "questionType": "options",
         "options": [
-            { "optionId": 429, "optionLabel": "Sì" },
-            { "optionId": 905, "optionLabel": "No" }
+            { "id": 429, "label": "Sì" },
+            { "id": 905, "label": "No" }
         ],
         "other": true
     },
     {
-        "questionId": 9304,
+        "id": 9304,
         "questionUi": "kopbcvej",
-        "questionText": "Quali prodotti hanno avuto problemi e che problemi erano?",
+        "title": "Quali prodotti hanno avuto problemi e che problemi erano?",
         "questionType": "free- answer",
         "maxLength": 256,
         "placeHolder": "Scrivi qui",
         "condition": {
-            "questionId": 3849,
+            "id": 3849,
             "answer": {
                 "answerId": 429
             }
         }
     },
     {
-        "questionId": 8392,
+        "id": 8392,
         "questionUi": "opktracan",
-        "questionText": "Come valuti la tua esperienza con il nostro installatore?",
-        "questionInfo": "Inserisci il tuo livello di gradimento",
+        "title": "Come valuti la tua esperienza con il nostro installatore?",
+        "subtitle": "Inserisci il tuo livello di gradimento",
         "questionType": "rating",
         "options": [
             {
-                "optionId": 472,
-                "optionLabel": "Molto negativa",
-                "optionWeight": 0
+                "id": 472,
+                "label": "Molto negativa",
+                "weight": 0
             },
             {
-                "optionId": 839,
-                "optionLabel": "Abbastanza negativa",
-                "optionWeight": 1
+                "id": 839,
+                "label": "Abbastanza negativa",
+                "weight": 1
             },
             {
-                "optionId": 542,
-                "optionLabel": "Neutra",
-                "optionWeight": 2
+                "id": 542,
+                "label": "Neutra",
+                "weight": 2
             },
             {
-                "optionId": 152,
-                "optionLabel": "Piuttosto positiva",
-                "optionWeight": 3
+                "id": 152,
+                "label": "Piuttosto positiva",
+                "weight": 3
             },
             {
-                "optionId": 234,
-                "optionLabel": "Molto Positiva",
-                "optionWeight": 4
+                "id": 234,
+                "label": "Molto Positiva",
+                "weight": 4
             }
         ]
     },
     {
-        "questionId": 19348,
+        "id": 19348,
         "questionUi": "ptrancae",
-        "questionText": "La prossima sezione riguarda i tuoi acquisti"
+        "title": "La prossima sezione riguarda i tuoi acquisti"
     },
     {
-        "questionId": 439782,
+        "id": 439782,
         "questionUi": "opkasdtr",
-        "questionText": "Che prodotti hai comprato?",
-        "questionInfo": "Seleziona una o più risposte",
+        "title": "Che prodotti hai comprato?",
+        "subtitle": "Seleziona una o più risposte",
         "questionType": "multi-select",
         "options": [
-            { "optionId": 891, "optionLabel": "Ebby ONE" },
-            { "optionId": 431, "optionLabel": "Kit componenti base" },
-            { "optionId": 482, "optionLabel": "Sensore qualità dell'aria" },
-            { "optionId": 690, "optionLabel": "Optimizer" }
+            { "id": 891, "label": "Ebby ONE" },
+            { "id": 431, "label": "Kit componenti base" },
+            { "id": 482, "label": "Sensore qualità dell'aria" },
+            { "id": 690, "label": "Optimizer" }
         ],
         "other": true
     },
     {
-        "questionId": 348132,
+        "id": 348132,
         "questionUi": "popaateae",
-        "questionText": "Hai suggerimenti da proporci?",
-        "questionInfo": "Scrivili qui sotto",
+        "title": "Hai suggerimenti da proporci?",
+        "subtitle": "Scrivili qui sotto",
         "questionType": "free-answer",
         "placeHolder": "Scrivi qui"
     },
     {
-        "questionId": 231890,
+        "id": 231890,
         "questionUi": "tropjcpad",
-        "questionText": "Il questionario è finito",
-        "questionInfo": "Clicca su \"invia\" per inviarci le tue risposte"
+        "title": "Il questionario è finito",
+        "subtitle": "Clicca su \"invia\" per inviarci le tue risposte"
     }
 ]
