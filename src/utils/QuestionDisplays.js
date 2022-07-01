@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // eslint-disable-next-line
 import Feedback, { Answer } from "../pages/Feedback";
 // eslint-disable-next-line
@@ -20,9 +20,6 @@ import { Question, FreeAnswerQuestion, OptionsQuestion, RatingQuestion } from ".
  * currentStep: number, totalSteps: number, goToStep: function(number): void, sendFeedback: function(): void}} props properties
  */
 function WizardStepObject(props){
-    useEffect(() => {
-    });
-
     return <div className={props.className || 'Step'} id={props.id}>
         <div className="Header">
             <h1>{props.title}</h1>
@@ -46,25 +43,25 @@ function WizardStepObject(props){
 const getButtons = function(step, totalSteps, goToStep, sendFeedback){
 
     if(totalSteps === 1){
-        return <div id="FeedbackButton">
-            <button className="NextButton" onClick={sendFeedback}>Invia</button>
+        return <div className="FeedbackButton">
+            <button onClick={sendFeedback}>Invia</button>
         </div>
     }
 
     if(step === 1){
-        return <div id="FeedbackButton">
-            <button className="NextButton" onClick={() => goToStep(step + 1)}>Avanti</button>
+        return <div className="FeedbackButton">
+            <button onClick={() => goToStep(step + 1)}>Avanti</button>
         </div>
     }
 
     if(step === totalSteps){
-        return <div id="FeedbackButton">
+        return <div className="FeedbackButton">
             <button onClick={() => goToStep(step - 1)}>Indietro</button>
             <button onClick={sendFeedback}>Invia</button>
         </div>
     }
 
-    return <div id="FeedbackButton">
+    return <div className="FeedbackButton">
         <button onClick={() => goToStep(step - 1)}>Indietro</button>
         <button onClick={() => goToStep(step + 1)}>Avanti</button>
     </div>
@@ -78,6 +75,10 @@ const getButtons = function(step, totalSteps, goToStep, sendFeedback){
  */
 
 /**
+ * @typedef {{name: string, surname: string, address: string}} User
+ */
+
+/**
  * Simple feedback page
  * @param {{question: Question, checker: function(Answer): boolean, index: number,
  * onChange: updateFeedbackCallback, onSend: function(): void}} props properties
@@ -86,7 +87,9 @@ const getButtons = function(step, totalSteps, goToStep, sendFeedback){
 export default function QuestionDisplay(props){
     return <WizardStepObject index={props.index} goToStep={props.goToStep} currentStep={props.currentStep} totalSteps={props.totalSteps}
         className="Question" id={props.question.questionId} sendFeedback={props.onSend}
-        title={props.question.questionText} subtitle={props.question.questionInfo}>
+        title={
+            props.question.questionText
+        } subtitle={props.question.questionInfo}>
         {getQuestion(props.question, props.onChange)}
     </WizardStepObject>
 }
@@ -286,4 +289,4 @@ function RatingQuestionDisplay(props){
     </div>
 }
 
-export { QuestionType, WizardStepObject, FreeAnswerQuestionDisplay, OptionQuestionDisplay as OptionsQuestionDisplay, RatingQuestionDisplay };
+export { QuestionType, WizardStepObject, FreeAnswerQuestionDisplay, OptionQuestionDisplay, RatingQuestionDisplay };

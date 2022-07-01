@@ -3,6 +3,7 @@ import StepWizard from "react-step-wizard";
 import QuestionDisplay from "../utils/QuestionDisplays";
 import questionario from '../questionario1.json';
 import { Navigate } from "react-router-dom";
+import NavBar from "./NavBar";
 
 export default class Feedback extends React.Component {
     constructor(props){
@@ -13,11 +14,19 @@ export default class Feedback extends React.Component {
          */
         this.state = {
             feedback: [],
-            finished: false
+            finished: false,
+            user: {
+                name: undefined,
+                surname : undefined
+            }
         };
 
         this.updateFeedback = this.updateFeedback.bind(this);
         this.sendFeedback = this.sendFeedback.bind(this);
+    }
+
+    componentDidMount(){
+        this.setState({user: {name: 'Davide', surname: 'Dalla Betta'}})
     }
     
     render(){
@@ -54,14 +63,15 @@ export default class Feedback extends React.Component {
             return deepEquality(risposta.answer, condition.answer);
         }
 
-        return (
+        return <>
+            <img id="Logo" src="/elettrone-logo.png" alt="Logo"/>
             <StepWizard transitions={{
                 enterLeft: 'animate__animated animate__slideInLeft',
                 enterRight: 'animate__animated animate__slideInRight',
                 exitLeft: 'animate__animated animate__fadeOutLeft',
                 exitRight: 'animate__animated animate__fadeOutRight',
                 intro: 'animate__animated animate__slideInUp'
-            }}>
+            }} nav={<NavBar/>}>
                 {
                     questionario
                         // controlla ogni condizione
@@ -71,10 +81,11 @@ export default class Feedback extends React.Component {
                         onChange={this.updateFeedback}
                         onSend={this.sendFeedback}
                         key={index}
+                        user={this.state.user}
                         question={question}/>)
                 }
             </StepWizard>
-        )
+        </>
     }
 
     /**
